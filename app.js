@@ -24,6 +24,20 @@ app.get('/strips', (req, res, next) => {
   });
 });
 
+// Middleware for Validate Strip before POST
+const validateStrip = (req, res, next) => {
+  let stripToCreate = req.body.strip;
+  if (
+    !stripToCreate.head ||
+    !stripToCreate.body ||
+    !stripToCreate.background ||
+    !stripToCreate.bubbleType
+  ) {
+    return res.sendStatus(400); // bad request
+  }
+  next();
+};
+
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
 });

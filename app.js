@@ -24,7 +24,7 @@ app.get('/strips', (req, res, next) => {
   });
 });
 
-// Middleware for Validate Strip before POST
+// Middleware for Validating Strip before POST
 const validateStrip = (req, res, next) => {
   let stripToCreate = req.body.strip;
   if (
@@ -37,6 +37,33 @@ const validateStrip = (req, res, next) => {
   }
   next();
 };
+
+// POST request
+app.post('/strips', validateStrip, (req, res, next) => {
+  let stripToCreate = req.body.strip;
+  db.run(
+    `INSERT INTO Strip (head, body, background, bubble_type, bubble_text, caption) VALUES ($head, $body, $background, $bubbleType, $bubbleText, $caption)`,
+    {
+      $head: stripToCreate.head,
+      $body: stripToCreate.body,
+      $background: stripToCreate.background,
+      $bubbleType: stripToCreate.bubbleType,
+      $bubbleText: stripToCreate.bubbleText,
+      $caption: stripToCreate.caption,
+    },
+    function (err) {
+      if (err) {
+        return res.sendStatus(500); // internal server error
+      }
+      db.get(`SELECT * FROM Strip WHERE id = ${this.lastID}`, (err, row) => {
+        if (!row) {
+          return res.sendStatus(500); //internal server error
+        }
+        res.status(201).send({ strip: row });
+      });
+    }
+  );
+});
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);

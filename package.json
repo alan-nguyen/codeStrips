@@ -11,11 +11,23 @@
   "dependencies": {
     "body-parser": "^1.18.1",
     "chai": "^4.1.2",
-    "express": "^4.15.4",
+    "express": "^4.17.1",
     "mocha": "^3.5.3",
     "morgan": "^1.8.2",
     "sqlite3": "^3.1.11",
     "structured": "git+https://github.com/RyzacInc/structuredjs.git",
     "supertest": "^3.0.0"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alan-nguyen/codeStrips.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/alan-nguyen/codeStrips/issues"
+  },
+  "homepage": "https://github.com/alan-nguyen/codeStrips#readme"
 }
